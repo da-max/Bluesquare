@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+    web:
+        command: php artisan serve --host=0.0.0.0
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '8000:8000'
+        links:
+            - db
+            - redis
+        depends_on:
+            - db
+        volumes:
+            - .:/usr/src/app:z
+            - exclude:/usr/local/app/vendor
+            - exclude:/usr/local/app/node_modules
+        env_file:
+            - .env
+
+    db:
+        image: mariadb:latest
+        ports:
+            - '3306:3306'
+        volumes:
+            - db:/var/lib/mysql
+        env_file:
+            - .env
+
+    redis:
+        image: redis:latest
+
+volumes:
+    db:
+    exclude:
