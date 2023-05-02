@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+Route::resource('tickets', \App\Http\Controllers\TicketController::class)
+    ->name('index', 'tickets.index')
+    ->name('show', 'tickets.show')
+    ->name('create', 'tickets.create')
+    ->name('store', 'tickets.store')
+    ->name('destroy', 'tickets.destroy');
